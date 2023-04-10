@@ -12,11 +12,11 @@ import com.alura.model.Huesped;
 
 
 
-public class HuespedesDAO {
+public class HuespedesDao {
 	
 	final private Connection con;
 	
-	public HuespedesDAO(Connection con) {
+	public HuespedesDao(Connection con) {
 		this.con = con;
 		
 	}
