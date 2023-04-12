@@ -90,7 +90,7 @@ public class Reservas {
 	
 	@Override
 	public String toString() {
-		return String.format("{id: %s, fecha de ingreso: %s, fecha de salida: %s,"
+		return String.format("id: %d, fecha de ingreso: %s, fecha de salida: %s,"
 				+ "Costo total: %s,"
 				+ "forma de pago: %s",
 				this.id,

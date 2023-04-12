@@ -7,7 +7,7 @@ public class Huesped {
 	Integer id;
 	String nombre;
 	String apellido;
-	String din;
+	String dni;
 	Date fecha_de_nacimiento;
 	String nacionalidad;
 	String telefono;
@@ -15,10 +15,12 @@ public class Huesped {
 	
 	public Huesped() {}
 	
-	public Huesped(Integer id, String nombre,
+	public Huesped(Integer id_reserva, Integer id, String dni, String nombre,
 			String apellido, Date fecha_nacimiento,
 			String nacionalidad, String telefono) {
+		this.id_reserva = id_reserva;
 		this.id = id;
+		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.fecha_de_nacimiento = fecha_nacimiento;
@@ -55,12 +57,12 @@ public class Huesped {
 		this.apellido = apellido;
 	}
 
-	public String getDin() {
-		return din;
+	public String getDni() {
+		return dni;
 	}
 
-	public void setDin(String din) {
-		this.din = din;
+	public void setDni(String dni) {
+		this.dni = dni;
 	}
 
 	public Date getFecha_de_nacimiento() {
@@ -90,11 +92,17 @@ public class Huesped {
 	@Override
 	public String toString() {
 		return String.format(
-				"{id: %s, nombre: %s, apellido: %s, fecha de nacimiento: %s,"
-				+ "nacionalidad: %s, telefono: %s ",
+				"reserva: %d,"
+				+ " id: %d,"
+				+ " nombre: %s,"
+				+ " dni: %s,"
+				+ " fecha de nacimiento: %s,"
+				+ " nacionalidad: %s,"
+				+ " telefono: %s",
+				this.id_reserva,
 				this.id,
 				this.nombre,
-				this.apellido,
+				this.dni,
 				this.fecha_de_nacimiento,
 				this.nacionalidad,
 				this.telefono
