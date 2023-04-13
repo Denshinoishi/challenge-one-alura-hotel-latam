@@ -15,24 +15,43 @@ public class Huesped {
 	
 	public Huesped() {}
 	
-	public Huesped(Integer id_reserva, Integer id, String dni, String nombre,
-			String apellido, Date fecha_nacimiento,
-			String nacionalidad, String telefono) {
-		this.id_reserva = id_reserva;
-		this.id = id;
-		this.dni = dni;
+	
+//	public Huesped(Integer id_reserva, Integer id, String dni, String nombre,
+//			String apellido, Date fecha_nacimiento,
+//			String nacionalidad, String telefono) {
+//		this.id_reserva = id_reserva;
+//		this.id = id;
+//		this.dni = dni;
+//		this.nombre = nombre;
+//		this.apellido = apellido;
+//		this.fecha_de_nacimiento = fecha_nacimiento;
+//		this.nacionalidad = nacionalidad;
+//		this.telefono = telefono;
+//		
+//		
+//	}
+	
+	
+	
+	
+	public Huesped(String nombre, String apellido, String dni,
+			Date fecha_de_nacimiento, String nacionalidad, String telefono) {
 		this.nombre = nombre;
 		this.apellido = apellido;
-		this.fecha_de_nacimiento = fecha_nacimiento;
+		this.dni = dni;
+		this.fecha_de_nacimiento = fecha_de_nacimiento;
 		this.nacionalidad = nacionalidad;
 		this.telefono = telefono;
-		
-		
 	}
-	
-	
-	
-	
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setId_reserva(Integer id_reserva) {
+		this.id_reserva = id_reserva;
+	}
+
 	public Integer getId() {
 		return id;
 	}

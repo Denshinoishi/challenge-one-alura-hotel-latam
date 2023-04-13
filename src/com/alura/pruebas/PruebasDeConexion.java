@@ -22,20 +22,15 @@ public class PruebasDeConexion {
 			ConnectionFactory con = new ConnectionFactory();
 			ReservasDao reservasDao = new ReservasDao(con.recuperarConexion());
 			HuespedesDao huespedesDao = new HuespedesDao(con.recuperarConexion());
-			huespedesDao.eliminar(1);
-//			huespedesDao.modificar(1, "Yotas", "Pelotas", "dni4654659", fecha2, "pelotense", "tel555555", 1);
-//			reservasDao.modificar(fecha1, fecha2, new BigDecimal("12345"),"con frutas", 2);
-//			reservasDao.guardar(reserva);
 			
-			List<Huesped> resultado = huespedesDao.listar();
-			for (Huesped huesped : resultado) {
-				System.out.println(huesped);
-			}
-//			
-//			List<Reservas> reservas = reservasDao.listar();
-//			for (Reservas reserva : reservas) {
-//				System.out.println(reserva);
-//			}
+			
+			
+			Huesped pn = new Huesped("Nombre", "Apellido", "DNI", fecha2, "Pelotense", "1234567890");
+			huespedesDao.guardar(reserva, pn);
+			
+			
+			System.out.println(pn);
+
 			
 	}
 	
