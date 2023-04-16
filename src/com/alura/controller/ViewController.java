@@ -24,6 +24,8 @@ public class ViewController {
 		LocalDate out = fecha_salida.toLocalDate();
 		long dias;
 		
+		Integer id = recuperarIdReserva() + 1;
+		
 		
 		if(in.equals(out)) {
 			dias = 1;
@@ -33,7 +35,7 @@ public class ViewController {
 			throw new IllegalArgumentException("");
 		}
 		
-		return new Reservas(fecha_ingreso, fecha_salida, formaPago);
+		return new Reservas(id, fecha_ingreso, fecha_salida, formaPago);
 		
 	}
 	
@@ -55,13 +57,17 @@ public class ViewController {
 	    
 	}
 
-	public Huesped crearHuesped(String nombre, String apellido, Date nacimiento, String telefono) {
-		return new Huesped(nombre, apellido, nacimiento, telefono);
+	public Huesped crearHuesped(String nombre, String apellido, String dni, String nacionalidad, Date nacimiento, String telefono) {
+		return new Huesped(nombre, apellido, dni, nacionalidad, nacimiento, telefono);
 		
 	}
 	
 	public void registrar(Reservas reserva, Huesped huesped) {
 		huespedesDao.guardar(reserva, huesped);
+	}
+	
+	public Integer recuperarIdReserva() {
+		return reservasDao.recuperarUltimoIdReserva();
 	}
 
 

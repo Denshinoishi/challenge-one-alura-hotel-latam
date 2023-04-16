@@ -43,7 +43,7 @@ public class ReservasDao {
 						Reservas reserva = new Reservas(
 								fechaIngreso, 
 								fechaSalida, 
-								resultSet.getInt("VALOR"), 
+								resultSet.getBigDecimal("VALOR"), 
 								resultSet.getString("FORMA_PAGO"));
 						
 						
@@ -124,9 +124,10 @@ public class ReservasDao {
 		}
 		
 		
+		
 	}
 	
-	private void ejecutaRegistro(Reservas reserva, PreparedStatement statement) throws SQLException {
+	public void ejecutaRegistro(Reservas reserva, PreparedStatement statement) throws SQLException {
 		statement.setDate(1, reserva.getFecha_de_ingreso());
 		statement.setDate(2, reserva.getFecha_de_salida());
 		statement.setBigDecimal(3, reserva.getValorTotal());
@@ -139,6 +140,27 @@ public class ReservasDao {
 				System.out.println(String.format("Fues insertado el producto %s", reserva));
 			}
 		}
+	}
+	
+	
+	public Integer recuperarUltimoIdReserva() {
+		Integer lastid = null;
+		try {
+			final PreparedStatement statement = con.prepareStatement(
+					"SELECT MAX(ID) FROM RESERVAS");
+			try(statement){
+				final ResultSet resultSet = statement.executeQuery();
+				try(resultSet){
+					if(resultSet.next()) {
+						lastid = resultSet.getInt(1);
+					}
+					
+				}
+			}
+		}catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return lastid;
 	}
 
 

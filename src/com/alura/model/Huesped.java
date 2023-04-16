@@ -13,7 +13,6 @@ public class Huesped {
 	String telefono;
 	Integer id_reserva;
 	
-	public Huesped() {}
 	
 	
 	public Huesped(Integer id_reserva, Integer id, String dni, String nombre,
@@ -34,8 +33,8 @@ public class Huesped {
 	
 	
 	
-	public Huesped(String nombre, String apellido, String dni,
-			Date fecha_de_nacimiento, String nacionalidad, String telefono) {
+	public Huesped(String nombre, String apellido, String dni, String nacionalidad,
+			Date fecha_de_nacimiento, String telefono) {
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.dni = dni;

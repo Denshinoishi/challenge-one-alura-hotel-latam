@@ -16,12 +16,11 @@ public class Reservas {
 	private Long dias;
 	private BigDecimal cuota;
 	final static public BigDecimal TASA = new BigDecimal(100000);
+	
 
-	public Reservas() {
-	}
 
-	public Reservas(Date fecha_de_ingreso, Date fecha_de_salida, String forma_de_pago) {
-
+	public Reservas(Integer id, Date fecha_de_ingreso, Date fecha_de_salida, String forma_de_pago) {
+		this.id = id;
 		this.fecha_de_ingreso = fecha_de_ingreso;
 		this.fecha_de_salida = fecha_de_salida;
 		this.forma_de_pago = forma_de_pago;
@@ -46,12 +45,20 @@ public class Reservas {
 
 	}
 
-	public Reservas(Date fechaIngreso, Date fechaSalida, int valor, String formaPago) {
+	public Reservas(Date fechaIngreso, Date fechaSalida, String formaPago) {
 		this.fecha_de_ingreso = fechaIngreso;
 		this.fecha_de_salida = fechaSalida;
-		this.valorTotal = new BigDecimal(valor);
+		
 		this.forma_de_pago = formaPago;
 	}
+	
+	public Reservas(Date fechaIngreso, Date fechaSalida, BigDecimal valor, String formaPago) {
+		this.fecha_de_ingreso = fechaIngreso;
+		this.fecha_de_salida = fechaSalida;
+		this.valorTotal = valor;
+		this.forma_de_pago = formaPago;
+	}
+	
 
 	public BigDecimal getCuota() {
 		return cuota;
