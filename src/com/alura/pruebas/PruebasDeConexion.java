@@ -16,7 +16,7 @@ public class PruebasDeConexion {
 		public static void main(String[] args) {
 			Date fecha1 = Date.valueOf("2023-1-20");
 			Date fecha2 = Date.valueOf("2023-11-20");
-			Reservas reserva = new Reservas(1, fecha1, fecha2, 100000, "con tapas");
+			Reservas reserva = new Reservas( fecha1, fecha2, 100000, "con tapas");
 			
 			System.out.println(reserva);
 			ConnectionFactory con = new ConnectionFactory();

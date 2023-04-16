@@ -10,16 +10,23 @@ import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JTextField;
+
+import com.alura.controller.ViewController;
+import com.alura.model.Reservas;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.text.Format;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.Toolkit;
 import java.beans.PropertyChangeListener;
+import java.sql.Date;
 import java.beans.PropertyChangeEvent;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
@@ -59,6 +66,9 @@ public class ReservasView extends JFrame {
 	 */
 	public ReservasView() {
 		super("Reserva");
+		
+		ViewController reservaController = new ViewController();
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ReservasView.class.getResource("/imagenes/aH-40px.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 560);
@@ -120,7 +130,7 @@ public class ReservasView extends JFrame {
 		panel.add(lblFormaPago);
 		
 		JLabel lblTitulo = new JLabel("SISTEMA DE RESERVAS");
-		lblTitulo.setBounds(109, 60, 219, 42);
+		lblTitulo.setBounds(93, 60, 245, 42);
 		lblTitulo.setForeground(new Color(12, 138, 199));
 		lblTitulo.setFont(new Font("Roboto", Font.BOLD, 20));
 		panel.add(lblTitulo);
@@ -205,7 +215,15 @@ public class ReservasView extends JFrame {
 		header.setBackground(Color.WHITE);
 		panel.add(header);
 		
+		labelAtras = new JLabel("<");
+		labelAtras.setBounds(0, 0, 53, 36);
+		header.add(labelAtras);
+		labelAtras.setHorizontalAlignment(SwingConstants.CENTER);
+		labelAtras.setFont(new Font("Roboto", Font.PLAIN, 23));
+		
 		JPanel btnAtras = new JPanel();
+		btnAtras.setBounds(0, 0, 53, 36);
+		header.add(btnAtras);
 		btnAtras.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -226,24 +244,11 @@ public class ReservasView extends JFrame {
 		});
 		btnAtras.setLayout(null);
 		btnAtras.setBackground(Color.WHITE);
-		btnAtras.setBounds(0, 0, 53, 36);
-		header.add(btnAtras);
-		
-		labelAtras = new JLabel("<");
-		labelAtras.setBounds(0, 0, 53, 36);
-		btnAtras.add(labelAtras);
-		labelAtras.setHorizontalAlignment(SwingConstants.CENTER);
-		labelAtras.setFont(new Font("Roboto", Font.PLAIN, 23));
-		
-		JLabel lblSiguiente = new JLabel("SIGUIENTE");
-		lblSiguiente.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSiguiente.setForeground(Color.WHITE);
-		lblSiguiente.setFont(new Font("Roboto", Font.PLAIN, 18));
-		lblSiguiente.setBounds(0, 0, 122, 35);
 		
 		
 		//Campos que guardaremos en la base de datos
 		txtFechaEntrada = new JDateChooser();
+		txtFechaEntrada.setMinSelectableDate(new Date(System.currentTimeMillis()));
 		txtFechaEntrada.getCalendarButton().setBackground(SystemColor.textHighlight);
 		txtFechaEntrada.getCalendarButton().setIcon(new ImageIcon(ReservasView.class.getResource("/imagenes/icon-reservas.png")));
 		txtFechaEntrada.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 12));
@@ -254,17 +259,43 @@ public class ReservasView extends JFrame {
 		txtFechaEntrada.setDateFormatString("yyyy-MM-dd");
 		txtFechaEntrada.setFont(new Font("Roboto", Font.PLAIN, 18));
 		panel.add(txtFechaEntrada);
-
+		
+		
+		txtFechaEntrada.addPropertyChangeListener("date", new PropertyChangeListener() {
+		    public void propertyChange(PropertyChangeEvent evt) {
+		        // Obtener la fecha seleccionada en txtFechaEntrada
+		        Date selectedDate = new Date(txtFechaEntrada.getDate().getTime());
+		        // Establecer la fecha mínima seleccionable en txtFechaSalida
+		        txtFechaSalida.setMinSelectableDate(selectedDate);
+		    }
+		});
+		
 		txtFechaSalida = new JDateChooser();
+		txtFechaSalida.setMinSelectableDate(new Date(System.currentTimeMillis()));
 		txtFechaSalida.getCalendarButton().setIcon(new ImageIcon(ReservasView.class.getResource("/imagenes/icon-reservas.png")));
 		txtFechaSalida.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 11));
 		txtFechaSalida.setBounds(68, 246, 289, 35);
 		txtFechaSalida.getCalendarButton().setBounds(267, 1, 21, 31);
 		txtFechaSalida.setBackground(Color.WHITE);
 		txtFechaSalida.setFont(new Font("Roboto", Font.PLAIN, 18));
+		
+		
 		txtFechaSalida.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				//Activa el evento, después del usuario seleccionar las fechas se debe calcular el valor de la reserva
+				
+				if(txtFechaEntrada.getDate() != null && txtFechaSalida != null) {
+					
+					String formaPago = (String) txtFormaPago.getSelectedItem();
+					Date fecha_ingreso = new Date(txtFechaEntrada.getDate().getTime());
+					Date fecha_salida = new Date(txtFechaSalida.getDate().getTime());
+					
+					var valor = reservaController.calcularReserva(fecha_ingreso, fecha_salida);
+					
+					txtValor.setText(String.valueOf("COP " + valor));
+				}
+				
+			
 			}
 		});
 		txtFechaSalida.setDateFormatString("yyyy-MM-dd");
@@ -274,14 +305,14 @@ public class ReservasView extends JFrame {
 
 		txtValor = new JTextField();
 		txtValor.setBackground(SystemColor.text);
-		txtValor.setHorizontalAlignment(SwingConstants.CENTER);
+		txtValor.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtValor.setForeground(Color.BLACK);
-		txtValor.setBounds(78, 328, 43, 33);
-		txtValor.setEditable(false);
+		txtValor.setBounds(78, 328, 279, 33);
+		txtValor.setColumns(10);
 		txtValor.setFont(new Font("Roboto Black", Font.BOLD, 17));
 		txtValor.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		panel.add(txtValor);
-		txtValor.setColumns(10);
+		
 
 
 		txtFormaPago = new JComboBox();
@@ -293,14 +324,28 @@ public class ReservasView extends JFrame {
 		panel.add(txtFormaPago);
 
 		JPanel btnsiguiente = new JPanel();
+		
+		btnsiguiente.setToolTipText("");
 		btnsiguiente.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (ReservasView.txtFechaEntrada.getDate() != null && ReservasView.txtFechaSalida.getDate() != null) {		
-					RegistroHuesped registro = new RegistroHuesped();
-					registro.setVisible(true);
+				if (ReservasView.txtFechaEntrada.getDate() != null
+						&& ReservasView.txtFechaSalida.getDate() != null) {
+					
+						String formaPago = (String) txtFormaPago.getSelectedItem();
+						RegistroHuesped registro = new RegistroHuesped();
+						Date fecha_ingreso = new Date(txtFechaEntrada.getDate().getTime());
+						Date fecha_salida = new Date(txtFechaSalida.getDate().getTime());
+					
+						Reservas reserva = reservaController.crearReserva(fecha_ingreso, fecha_salida, formaPago);
+						registro.setReserva(reserva);
+						registro.setVisible(true);
+						
+										
 				} else {
 					JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
+					
+					
 				}
 			}						
 		});
@@ -309,6 +354,13 @@ public class ReservasView extends JFrame {
 		btnsiguiente.setBounds(238, 493, 122, 35);
 		panel.add(btnsiguiente);
 		btnsiguiente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		
+		JLabel lblSiguiente = new JLabel("SIGUIENTE");
+		lblSiguiente.setBounds(0, 0, 122, 35);
+		btnsiguiente.add(lblSiguiente);
+		lblSiguiente.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSiguiente.setForeground(Color.WHITE);
+		lblSiguiente.setFont(new Font("Roboto", Font.PLAIN, 18));
 
 
 	}

@@ -106,7 +106,16 @@ public class HuespedesDao {
 	
 	
 	public void guardar(Reservas reserva, Huesped huesped) {
+		
+		
 		try {
+			con.setAutoCommit(false);
+			
+			ReservasDao reservaDao = new ReservasDao(con);
+			reservaDao.guardar(reserva);
+			
+		
+			
 			final PreparedStatement statement = con.prepareStatement(
 					"INSERT INTO HUESPEDES "
 					+ "(IDRESERVA, " 		
@@ -119,15 +128,24 @@ public class HuespedesDao {
 					+ "VALUES (?,?,?,?,?,?,?)",
 					Statement.RETURN_GENERATED_KEYS);
 			try (statement) {
-				ejecutaRegistro(reserva, huesped, statement);
+				ejecutaRegistro(reserva, huesped, reserva.getId(), statement );
 			}
 		} catch (SQLException e) {
+			try {
+				con.rollback();
+				con.setAutoCommit(true);
+			} catch (SQLException ex) {
+				throw new RuntimeException(ex);
+			}
 			throw new RuntimeException(e);
 		}
 
 	}
 
-	private void ejecutaRegistro(Reservas reserva, Huesped huesped, PreparedStatement statement) throws SQLException {
+	private void ejecutaRegistro(Reservas reserva, Huesped huesped, Integer reservaId, PreparedStatement statement) throws SQLException {
+		
+		
+		try(statement){
 		statement.setInt(1, reserva.getId());
 		statement.setString(2, huesped.getNombre());
 		statement.setString(3, huesped.getApellido() );
@@ -144,6 +162,10 @@ public class HuespedesDao {
 				System.out.println(String.format("Fues insertado el huesped %s", huesped));
 			}
 		}
+	}
+		con.commit();
+		con.setAutoCommit(true);
+		
 	}
 
 }// FIN HUESPEDESDAO

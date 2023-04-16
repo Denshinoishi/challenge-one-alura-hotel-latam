@@ -16,20 +16,20 @@ public class Huesped {
 	public Huesped() {}
 	
 	
-//	public Huesped(Integer id_reserva, Integer id, String dni, String nombre,
-//			String apellido, Date fecha_nacimiento,
-//			String nacionalidad, String telefono) {
-//		this.id_reserva = id_reserva;
-//		this.id = id;
-//		this.dni = dni;
-//		this.nombre = nombre;
-//		this.apellido = apellido;
-//		this.fecha_de_nacimiento = fecha_nacimiento;
-//		this.nacionalidad = nacionalidad;
-//		this.telefono = telefono;
-//		
-//		
-//	}
+	public Huesped(Integer id_reserva, Integer id, String dni, String nombre,
+			String apellido, Date fecha_nacimiento,
+			String nacionalidad, String telefono) {
+		this.id_reserva = id_reserva;
+		this.id = id;
+		this.dni = dni;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.fecha_de_nacimiento = fecha_nacimiento;
+		this.nacionalidad = nacionalidad;
+		this.telefono = telefono;
+		
+		
+	}
 	
 	
 	
@@ -43,6 +43,14 @@ public class Huesped {
 		this.nacionalidad = nacionalidad;
 		this.telefono = telefono;
 	}
+
+	public Huesped(String nombre, String apellido, Date nacimiento, String telefono) {
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.fecha_de_nacimiento = nacimiento;
+		this.telefono = telefono;
+	}
+
 
 	public void setId(Integer id) {
 		this.id = id;
