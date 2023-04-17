@@ -309,6 +309,7 @@ public class RegistroHuesped extends JFrame {
 					huesped = reservaController.crearHuesped(nombre, apellido, dni, nacionalidad, nacimiento, telefono);
 					Confirmacion confirmacion = new Confirmacion(reserva, huesped);
 					confirmacion.setVisible(true);
+					dispose();
 					
 					
 					

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 import com.alura.connectionfactory.ConnectionFactory;
 import com.alura.dao.HuespedesDao;
@@ -68,6 +69,15 @@ public class ViewController {
 	
 	public Integer recuperarIdReserva() {
 		return reservasDao.recuperarUltimoIdReserva();
+	}
+	
+	public List<Reservas> listarReservas(){
+		return reservasDao.listar();
+	}
+
+	public List<Huesped> listarHuespedes() {
+		
+		return huespedesDao.listar();
 	}
 
 

@@ -226,8 +226,11 @@ public class Confirmacion extends JFrame {
 		btnValidar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println(reserva + "\n" + huesped );
+				
 				reservaController.registrar(reserva, huesped);
+				Exito exito = new Exito();
+				exito.setVisible(true);
+				dispose();
 			
 			}						
 		});

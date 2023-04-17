@@ -6,6 +6,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import com.alura.controller.ViewController;
+import com.alura.dao.ReservasDao;
+import com.alura.model.Huesped;
+import com.alura.model.Reservas;
+
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -38,7 +44,9 @@ public class Busqueda extends JFrame {
 	private JLabel labelAtras;
 	private JLabel labelExit;
 	int xMouse, yMouse;
-
+	private ViewController busquedaController = new ViewController();
+	List<Reservas> reservas = busquedaController.listarReservas();
+	List<Huesped> huesdes = busquedaController.listarHuespedes();
 	/**
 	 * Launch the application.
 	 */
@@ -59,6 +67,7 @@ public class Busqueda extends JFrame {
 	 * Create the frame.
 	 */
 	public Busqueda() {
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Busqueda.class.getResource("/imagenes/lupa2.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 571);
@@ -106,6 +115,14 @@ public class Busqueda extends JFrame {
 		scroll_table.setVisible(true);
 		
 		
+		
+		DefaultTableModel model = (DefaultTableModel) tbReservas.getModel();
+		for (Reservas reserva : reservas) {
+			Object[] row = { reserva.getId(), reserva.getFecha_de_ingreso(), reserva.getFecha_de_salida(), reserva.getValorTotal(), reserva.getForma_de_pago()};
+			model.addRow(row);
+			
+		}
+		
 		tbHuespedes = new JTable();
 		tbHuespedes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbHuespedes.setFont(new Font("Roboto", Font.PLAIN, 16));
@@ -113,6 +130,7 @@ public class Busqueda extends JFrame {
 		modeloHuesped.addColumn("Número de Huesped");
 		modeloHuesped.addColumn("Nombre");
 		modeloHuesped.addColumn("Apellido");
+		modeloHuesped.addColumn("DNI");
 		modeloHuesped.addColumn("Fecha de Nacimiento");
 		modeloHuesped.addColumn("Nacionalidad");
 		modeloHuesped.addColumn("Telefono");
@@ -120,6 +138,14 @@ public class Busqueda extends JFrame {
 		JScrollPane scroll_tableHuespedes = new JScrollPane(tbHuespedes);
 		panel.addTab("Huéspedes", new ImageIcon(Busqueda.class.getResource("/imagenes/pessoas.png")), scroll_tableHuespedes, null);
 		scroll_tableHuespedes.setVisible(true);
+		
+		DefaultTableModel modelx = (DefaultTableModel) tbHuespedes.getModel();
+		
+		for (Huesped huesped : huesdes) {
+			Object[] row = { huesped.getId(), huesped.getNombre(), huesped.getApellido(), huesped.getDni(),huesped.getFecha_de_nacimiento(), huesped.getNacionalidad(), huesped.getTelefono(), huesped.getId_reserva()};
+			modelx.addRow(row);
+			
+		}
 		
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setIcon(new ImageIcon(Busqueda.class.getResource("/imagenes/Ha-100px.png")));

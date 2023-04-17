@@ -59,6 +59,15 @@ public class Reservas {
 		this.forma_de_pago = formaPago;
 	}
 	
+	public Reservas(Integer id,Date fechaIngreso, Date fechaSalida, BigDecimal valor, String formaPago) {
+		this.id = id;
+		this.fecha_de_ingreso = fechaIngreso;
+		this.fecha_de_salida = fechaSalida;
+		this.valorTotal = valor;
+		this.forma_de_pago = formaPago;
+	}
+	
+	
 
 	public BigDecimal getCuota() {
 		return cuota;

@@ -41,6 +41,7 @@ public class ReservasDao {
 						Date fechaIngreso = resultSet.getDate("FECHA_INGRESO");
 						Date fechaSalida = resultSet.getDate("FECHA_SALIDA");
 						Reservas reserva = new Reservas(
+								resultSet.getInt("ID"),
 								fechaIngreso, 
 								fechaSalida, 
 								resultSet.getBigDecimal("VALOR"), 

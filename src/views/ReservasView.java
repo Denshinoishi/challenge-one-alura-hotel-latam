@@ -343,6 +343,7 @@ public class ReservasView extends JFrame {
 						System.out.println(reserva);
 						registro.setReserva(reserva);
 						registro.setVisible(true);
+						dispose();
 						
 										
 				} else {
