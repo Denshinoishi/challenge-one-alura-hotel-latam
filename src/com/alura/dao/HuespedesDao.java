@@ -103,7 +103,23 @@ public class HuespedesDao {
 		}
 	}
 
-	
+	public int eliminarIdReserva(Integer id) {
+		try {
+			final PreparedStatement statement = con.prepareStatement("DELETE FROM HUESPEDES WHERE IDRESERVA = ?");
+
+			try (statement) {
+				statement.setInt(1, id);
+				statement.execute();
+
+				int updateCount = statement.getUpdateCount();
+
+				return updateCount;
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	
 	public void guardar(Reservas reserva, Huesped huesped) {
 		

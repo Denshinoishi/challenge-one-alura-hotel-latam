@@ -80,5 +80,22 @@ public class ViewController {
 		return huespedesDao.listar();
 	}
 
+	public Integer modificarReserva(Integer id, Date in, Date out, BigDecimal valor, String formaPago) {
+		return reservasDao.modificar(in, out, valor, formaPago, id);
+		
+	}
+
+	public Integer eliminarReserva(Integer id) {
+		huespedesDao.eliminarIdReserva(id);
+		return reservasDao.eliminar(id);
+		
+	}
+
+	public Integer eliminarHuesped(Integer id, Integer idReserva) {
+		reservasDao.eliminar(idReserva);
+		int item = huespedesDao.eliminar(id);		
+		return item;
+	}
+
 
 }
