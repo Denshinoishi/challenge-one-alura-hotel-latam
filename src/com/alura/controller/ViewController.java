@@ -25,7 +25,7 @@ public class ViewController {
 		LocalDate out = fecha_salida.toLocalDate();
 		long dias;
 		
-		Integer id = recuperarIdReserva() + 1;
+		Integer id = reservasDao.consultarProximoId();
 		
 		
 		if(in.equals(out)) {
@@ -87,7 +87,8 @@ public class ViewController {
 
 	public Integer eliminarReserva(Integer id) {
 		huespedesDao.eliminarIdReserva(id);
-		return reservasDao.eliminar(id);
+		int idreserva = huespedesDao.recuperarIdReserva(id);
+		return reservasDao.eliminar(idreserva);
 		
 	}
 
@@ -96,6 +97,13 @@ public class ViewController {
 		int item = huespedesDao.eliminar(id);		
 		return item;
 	}
+
+	public int modificarHuesped(Huesped huesped, Integer id) {
+		
+		return huespedesDao.modificar(huesped, id);
+	}
+
+	
 
 
 }

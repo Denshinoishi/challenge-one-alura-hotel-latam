@@ -10,6 +10,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
+
 import com.alura.model.Huesped;
 import com.alura.model.Reservas;
 
@@ -33,9 +35,13 @@ public class HuespedesDao {
 				try (resultSet) {
 					while (resultSet.next()) {
 						Date fechaNacimiento = resultSet.getDate("FECHA_NACIMIENTO");
-						Huesped huesped = new Huesped(resultSet.getInt("ID"), resultSet.getInt("IDRESERVA"),
-								resultSet.getString("DNI"), resultSet.getString("NOMBRE"),
-								resultSet.getString("APELLIDO"), fechaNacimiento, resultSet.getString("NACIONALIDAD"),
+						Huesped huesped = new Huesped(resultSet.getInt("ID"),
+								resultSet.getInt("IDRESERVA"),
+								resultSet.getString("DNI"),
+								resultSet.getString("NOMBRE"),
+								resultSet.getString("APELLIDO"),
+								fechaNacimiento,
+								resultSet.getString("NACIONALIDAD"),
 								resultSet.getString("TELEFONO"));
 						resultado.add(huesped);
 
@@ -116,6 +122,28 @@ public class HuespedesDao {
 				return updateCount;
 			}
 		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public int recuperarIdReserva(Integer id) {
+		try {
+			final PreparedStatement statement = con.prepareStatement("SELECT IDRESERVA FROM HUESPEDES WHERE ID = ?");
+			try(statement){
+				statement.setInt(1, id);
+				ResultSet resultSet = statement.executeQuery();
+				try(resultSet){
+					
+					
+					if(resultSet.next()) {
+						return resultSet.getInt(1);						
+					}else {
+						throw new RuntimeException("No se encontro el valor de IDRESERVA");
+					}
+					
+				}
+			}
+		}catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}

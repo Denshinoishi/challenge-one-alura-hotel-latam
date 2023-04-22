@@ -19,8 +19,10 @@ public class PruebasDeConexion {
 			ReservasDao reservasDao = new ReservasDao(con.recuperarConexion());
 			HuespedesDao huespedesDao = new HuespedesDao(con.recuperarConexion());
 			
+			System.out.println(huespedesDao.recuperarIdReserva(277));
 			
-			System.out.println(reservasDao.recuperarUltimoIdReserva());
+			
+			
 
 			
 	}

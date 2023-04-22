@@ -299,6 +299,8 @@ public class RegistroHuesped extends JFrame {
 						&& txtFechaN.getDate() != null
 						&& !txtTelefono.getText().isEmpty()
 						&& !txtDni.getText().isEmpty()){
+					
+					
 					String nombre = txtNombre.getText();
 					String apellido = txtApellido.getText();
 					String dni = txtDni.getText();
@@ -306,21 +308,21 @@ public class RegistroHuesped extends JFrame {
 					Date nacimiento = new Date(txtFechaN.getDate().getTime());
 					String telefono = txtTelefono.getText();
 					
-					huesped = reservaController.crearHuesped(nombre, apellido, dni, nacionalidad, nacimiento, telefono);
-					Confirmacion confirmacion = new Confirmacion(reserva, huesped);
-					confirmacion.setVisible(true);
-					dispose();
 					
-					
-					
-					
+					if(telefono.length() > 10) {
+						JOptionPane.showMessageDialog(null, "El número telefónico no puede superar los diez digitos");
+					}else {
+						huesped = reservaController.crearHuesped(nombre, apellido, dni, nacionalidad, nacimiento, telefono);
+						Confirmacion confirmacion = new Confirmacion(reserva, huesped);
+						confirmacion.setVisible(true);
+						dispose();
+						
+					}
 					
 				} else {
 					JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
 				}
-				System.out.println("Guardar");
-
-				System.out.println(reserva);
+			
 
 			}
 		});

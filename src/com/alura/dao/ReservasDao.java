@@ -62,6 +62,30 @@ public class ReservasDao {
 		
 	}
 	
+	public int consultarProximoId() {
+		try {
+			final PreparedStatement statement = con.prepareStatement("SELECT AUTO_INCREMENT "
+					+ "FROM information_schema.TABLES "
+					+ "WHERE TABLE_SCHEMA = 'hotel_alura' "
+					+ "AND TABLE_NAME = 'reservas'");
+			try (statement){
+				final ResultSet resultSet  = statement.executeQuery();
+				
+				try(resultSet){
+					
+					if(resultSet.next()) {
+						return resultSet.getInt(1);						
+					}else {
+						throw new RuntimeException("No se encontro el valor de AUTO_INCREMENT");
+					}
+					
+				}
+			}
+		}catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 	
 	public int modificar(Date fecha_ingreso, Date fecha_salida, BigDecimal cuota, String forma_pago, Integer id) {
 		 try {

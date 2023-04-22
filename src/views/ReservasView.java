@@ -337,7 +337,7 @@ public class ReservasView extends JFrame {
 						
 						Date fecha_ingreso = new Date(txtFechaEntrada.getDate().getTime());
 						Date fecha_salida = new Date(txtFechaSalida.getDate().getTime());
-					
+						
 						Reservas reserva = reservaController.crearReserva(fecha_ingreso, fecha_salida, formaPago);
 						RegistroHuesped registro = new RegistroHuesped(reserva);
 						System.out.println(reserva);
