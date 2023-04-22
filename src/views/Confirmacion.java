@@ -202,8 +202,8 @@ public class Confirmacion extends JFrame {
 		btnAtras.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				RegistroHuesped usuario = new RegistroHuesped(reserva);
-				usuario.setVisible(true);
+				ReservasView r = new ReservasView(reserva);
+				r.setVisible(true);
 				dispose();				
 			}
 			@Override

@@ -85,7 +85,7 @@ public class RegistroHuesped extends JFrame {
 		contentPane.setLayout(null);
 
 		JPanel header = new JPanel();
-		header.setBounds(0, 0, 910, 36);
+		header.setBounds(31, 75, 910, 36);
 		header.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseDragged(MouseEvent e) {
@@ -109,7 +109,7 @@ public class RegistroHuesped extends JFrame {
 		btnAtras.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ReservasView reservas = new ReservasView();
+				ReservasView reservas = new ReservasView(reserva);
 				reservas.setVisible(true);
 				dispose();
 			}
@@ -137,6 +137,8 @@ public class RegistroHuesped extends JFrame {
 		labelAtras.setFont(new Font("Roboto", Font.PLAIN, 23));
 		labelAtras.setBounds(0, 0, 53, 36);
 		btnAtras.add(labelAtras);
+		
+	
 
 		txtNombre = new JTextField();
 		txtNombre.setFont(new Font("Roboto", Font.PLAIN, 16));
@@ -356,6 +358,7 @@ public class RegistroHuesped extends JFrame {
 
 		JPanel btnexit = new JPanel();
 		btnexit.setBounds(857, 0, 53, 36);
+		btnexit.setOpaque(false);
 		contentPane.add(btnexit);
 		btnexit.addMouseListener(new MouseAdapter() {
 			@Override
@@ -402,6 +405,10 @@ public class RegistroHuesped extends JFrame {
 		contentPane.add(lblDni);
 	}
 
+	
+	
+	
+	
 	// Código que permite mover la ventana por la pantalla según la posición de "x"
 	// y "y"
 	private void headerMousePressed(java.awt.event.MouseEvent evt) {

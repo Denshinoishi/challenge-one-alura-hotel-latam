@@ -570,7 +570,7 @@ public class Busqueda extends JFrame {
 		Optional.ofNullable(modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), tbHuespedes.getSelectedColumn()))
 				.ifPresentOrElse(fila -> {
 					Integer id = Integer.valueOf( modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 0).toString());
-					Integer idReserva = Integer.valueOf(modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 7 ).toString());
+					Integer idReserva = Integer.valueOf(modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 1 ).toString());
 					
 					
 					var cantidadEliminada = this.busquedaController.eliminarHuesped(id, idReserva);

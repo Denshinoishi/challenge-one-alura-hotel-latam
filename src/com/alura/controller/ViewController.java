@@ -86,16 +86,17 @@ public class ViewController {
 	}
 
 	public Integer eliminarReserva(Integer id) {
+		
 		huespedesDao.eliminarIdReserva(id);
-		int idreserva = huespedesDao.recuperarIdReserva(id);
-		return reservasDao.eliminar(idreserva);
+	return reservasDao.eliminar(id);
 		
 	}
 
 	public Integer eliminarHuesped(Integer id, Integer idReserva) {
-		reservasDao.eliminar(idReserva);
-		int item = huespedesDao.eliminar(id);		
-		return item;
+		huespedesDao.eliminar(id);
+		return reservasDao.eliminar(idReserva);
+		
+		
 	}
 
 	public int modificarHuesped(Huesped huesped, Integer id) {
